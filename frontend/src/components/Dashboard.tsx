@@ -26,6 +26,7 @@ export const Dashboard = () => {
   } = useIdentifyDiscrepancies(submittedRules, {
     enabled: shouldFetchAudit,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const {
