@@ -5,6 +5,9 @@ from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from db import engine
 from sqlmodel import SQLModel
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_db_and_tables():
