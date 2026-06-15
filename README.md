@@ -17,7 +17,10 @@ Cross-checks timesheets, billing reports and contract rates, flags discrepancies
 cp .env.example .env
 ```
 
-Fill in `ANTHROPIC_API_KEY` with your Anthropic API key.
+- `ANTHROPIC_API_KEY` - your Anthropic API key.
+- `CLAUDE_MODEL` - Claude model used for the AI analysis (defaults to "claude-haiku-4-5").
+- `VITE_API_URL` - backend URL the frontend calls. Use `http://localhost:8000` for local dev.
+- `API_URL` - backend URL used by `backend/automate.py`. Same default as above.
 
 ### 2. Backend
 
