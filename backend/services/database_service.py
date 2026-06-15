@@ -24,6 +24,9 @@ class DatabaseService:
         Generically maps CSV rows to SQLModel fields, coerces types,
         validates the schema, and saves to the database.
         """
+        # Clear existing records of this model first so the data is always fresh
+        db.query(model_class).delete()
+
         records = []
 
         field_mapping = mapping.model_dump()

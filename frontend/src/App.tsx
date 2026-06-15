@@ -1,17 +1,14 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Dashboard } from "@/components/Dashboard";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-function App() {
+export function App() {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <main className="bg-black text-white min-h-screen">
-          <h1 className="text-2xl font-bold">Hello World</h1>
-        </main>
-      </QueryClientProvider>
-    </>
-  )
+    <QueryClientProvider client={queryClient}>
+      <Dashboard />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
