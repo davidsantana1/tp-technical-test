@@ -6,17 +6,14 @@ export interface BillingMappingParams {
 }
 
 export interface ContractsMappingParams {
-  employee_id: string;
-  contract_number: string;
   project: string;
-  hours_to_bill: string;
-  start_date: string;
-  end_date: string;
+  rate_per_hour: string;
+  max_hours_per_week: string;
 }
 
 export interface TimesheetMappingParams {
   employee_id: string;
-  date: string;
+  employee_name: string;
   project: string;
-  hours: string;
+  hours_worked: string;
 }
