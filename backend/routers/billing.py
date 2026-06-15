@@ -10,7 +10,7 @@ router = APIRouter(prefix="/billing", tags=["billing"])
 
 
 @router.post("/identify-discrepancies")
-async def identify_discrepancies(db: SessionDep):
+async def identify_discrepancies(db: SessionDep, client_rules: str):
     data = BillingService.run_billing_audit(db)
 
     json_compatible_data = jsonable_encoder(data)
@@ -19,7 +19,7 @@ async def identify_discrepancies(db: SessionDep):
     claude_client = Claude()
 
     try:
-        ai_analysis = await claude_client.create_message(audit_json_str)
+        ai_analysis = await claude_client.create_message(audit_json_str, client_rules)
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
