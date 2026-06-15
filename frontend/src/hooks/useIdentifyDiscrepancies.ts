@@ -2,9 +2,9 @@ import type { IdentifyDiscrepanciesResponse } from "@/api/identify-discrepancies
 import { identifyDiscrepancies as apiIdentifyDiscrepancies } from "@/api/identify-discrepancies";
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
-export type UseIdentifyDiscrepanciesOptions = UseQueryOptions<
-  IdentifyDiscrepanciesResponse,
-  Error
+export type UseIdentifyDiscrepanciesOptions = Omit<
+  UseQueryOptions<IdentifyDiscrepanciesResponse, Error>,
+  "queryKey" | "queryFn"
 >;
 
 export function useIdentifyDiscrepancies(
