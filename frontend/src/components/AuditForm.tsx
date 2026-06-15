@@ -39,17 +39,17 @@ interface AuditFormProps {
 const fileFields = [
   {
     id: "timesheetFile",
-    label: "Timesheet CSV",
+    label: "Timesheet (CSV/Excel)",
     requiredMsg: "Timesheet file is required",
   },
   {
     id: "billingFile",
-    label: "Billing CSV",
+    label: "Billing (CSV/Excel)",
     requiredMsg: "Billing file is required",
   },
   {
     id: "contractFile",
-    label: "Contract CSV",
+    label: "Contract (CSV/Excel)",
     requiredMsg: "Contract file is required",
   },
 ] as const;
@@ -75,7 +75,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
                 <Input
                   id={field.id}
                   type="file"
-                  accept=".csv"
+                  accept=".csv,.xlsx"
                   disabled={isLoading}
                   className="text-xs h-9 py-1 file:text-xs"
                   {...register(field.id, { required: field.requiredMsg })}
