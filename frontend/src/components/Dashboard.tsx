@@ -150,6 +150,8 @@ export const Dashboard = () => {
         ) : (
           <EmptyState />
         )}
+
+        <p className="text-center text-xs text-muted-foreground/70 pt-4">Built by David Santana</p>
       </div>
     </main>
   );

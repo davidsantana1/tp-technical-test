@@ -2,6 +2,8 @@
 
 Cross-checks timesheets, billing reports and contract rates, flags discrepancies, and uses Claude to explain the root cause and a fix.
 
+**Live demo**: https://tp-technical-test.vercel.app/ (AI integration working)
+
 ## Stack
 
 - **Backend**: FastAPI, SQLModel, SQLite
@@ -45,3 +47,5 @@ App runs at `http://localhost:5173`.
 2. Adjust the column mappings if your CSV headers differ from the defaults.
 3. Optionally add client rules in plain text.
 4. Run the audit to see flagged records and Claude's analysis.
+
+Sample CSVs to try this with are in `backend/provided-docs/`.
