@@ -1,11 +1,12 @@
 """
-Database service for loading CSV files into the database.
+Database service for loading CSV and Excel files into the database.
 """
 
 from helpers import validate_csv_headers
 import io
 import csv
-from constants import ACCEPTED_FILE_MIME_TYPES
+from openpyxl import load_workbook
+from constants import ACCEPTED_FILE_MIME_TYPES, EXCEL_MIME_TYPE
 from fastapi import UploadFile
 from sqlmodel import SQLModel
 from typing import Type, TypeVar
@@ -52,25 +53,40 @@ class DatabaseService:
         return records
 
     @staticmethod
+    def _read_csv(contents: bytes) -> tuple[list[str], list[dict]]:
+        stream = io.StringIO(contents.decode("utf-8-sig"))
+        csv_reader = csv.DictReader(stream)
+        rows = list(csv_reader)
+        return list(csv_reader.fieldnames or []), rows
+
+    @staticmethod
+    def _read_excel(contents: bytes) -> tuple[list[str], list[dict]]:
+        sheet = load_workbook(io.BytesIO(contents), read_only=True, data_only=True).active
+        rows = sheet.iter_rows(values_only=True)
+        headers = [str(header) for header in next(rows, [])]
+        return headers, [dict(zip(headers, row)) for row in rows]
+
+    @staticmethod
     async def load_csv(
         file: UploadFile, db: Session, mapping: BaseModel, model_class: Type[T]
     ):
         """
-        Loads a CSV file into the database.
+        Loads a CSV or Excel file into the database.
         """
         if file.content_type not in ACCEPTED_FILE_MIME_TYPES:
-            raise ValueError("Only CSV files are accepted.")
+            raise ValueError("Only CSV or Excel files are accepted.")
 
         contents = await file.read()
-        stream = io.StringIO(contents.decode("utf-8-sig"))
-        csv_reader = csv.DictReader(stream)
 
-        if not validate_csv_headers(mapping, csv_reader):
+        if file.content_type == EXCEL_MIME_TYPE:
+            fieldnames, loaded_csv = DatabaseService._read_excel(contents)
+        else:
+            fieldnames, loaded_csv = DatabaseService._read_csv(contents)
+
+        if not validate_csv_headers(mapping, fieldnames):
             raise ValueError(
-                "Error: The CSV file headers do not match the expected headers.",
+                "Error: The file headers do not match the expected headers.",
             )
-
-        loaded_csv = list(csv_reader)
 
         DatabaseService.parse_and_save_records(db, loaded_csv, mapping, model_class)
 

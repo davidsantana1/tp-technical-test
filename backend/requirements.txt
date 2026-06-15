@@ -3,3 +3,4 @@ sqlmodel
 python-multipart
 anthropic
 python-dotenv
+openpyxl

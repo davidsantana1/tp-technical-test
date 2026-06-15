@@ -1,11 +1,9 @@
 from pydantic import BaseModel
-from csv import DictReader
+from typing import Iterable
 
 
-def validate_csv_headers(headers: BaseModel, csv_reader: DictReader) -> bool:
-    """Validates that all expected columns in the schema mapping exist in the CSV reader."""
+def validate_csv_headers(headers: BaseModel, actual_headers: Iterable[str]) -> bool:
+    """Validates that all expected columns in the schema mapping exist in the file headers."""
     expected_headers = set(headers.model_dump().values())
 
-    actual_headers = set(csv_reader.fieldnames or [])
-
-    return expected_headers.issubset(actual_headers)
+    return expected_headers.issubset(set(actual_headers))
