@@ -5,12 +5,13 @@ from fastapi.encoders import jsonable_encoder
 from db import SessionDep
 from services import BillingService, Claude
 from fastapi import APIRouter
+from schemas import IdentifyDiscrepanciesRequest
 
 router = APIRouter(prefix="/billing", tags=["billing"])
 
 
 @router.post("/identify-discrepancies")
-async def identify_discrepancies(db: SessionDep, client_rules: str):
+async def identify_discrepancies(db: SessionDep, request: IdentifyDiscrepanciesRequest):
     data = BillingService.run_billing_audit(db)
 
     json_compatible_data = jsonable_encoder(data)
@@ -19,7 +20,7 @@ async def identify_discrepancies(db: SessionDep, client_rules: str):
     claude_client = Claude()
 
     try:
-        ai_analysis = await claude_client.create_message(audit_json_str, client_rules)
+        ai_analysis = await claude_client.create_message(audit_json_str, request.client_rules)
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
