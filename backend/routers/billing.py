@@ -1,5 +1,3 @@
-from fastapi import status
-from fastapi import HTTPException
 import json
 from fastapi.encoders import jsonable_encoder
 from db import SessionDep
@@ -22,9 +20,6 @@ async def identify_discrepancies(db: SessionDep, request: IdentifyDiscrepanciesR
     try:
         ai_analysis = await claude_client.create_message(audit_json_str, request.client_rules)
     except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="AI service is currently unavailable. Please try again later",
-        )
+        ai_analysis = None
 
     return {"data": data, "analysis": ai_analysis}

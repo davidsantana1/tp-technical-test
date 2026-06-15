@@ -1,6 +1,6 @@
 export interface IdentifyDiscrepanciesResponse {
   data: Data[];
-  analysis: Analysis[];
+  analysis: Analysis[] | null;
 }
 
 type Status = "OK" | "ERROR";

@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { Analysis } from "@/api/identify-discrepancies/types";
 
 interface AiFindingsProps {
-  analysis: Analysis[];
+  analysis: Analysis[] | null;
 }
 
 export const AiFindings: React.FC<AiFindingsProps> = ({ analysis }) => {
@@ -27,6 +27,8 @@ export const AiFindings: React.FC<AiFindingsProps> = ({ analysis }) => {
                 />
               ))}
             </div>
+          ) : analysis === null ? (
+            <p className="text-muted-foreground text-xs italic">AI analysis is currently unavailable.</p>
           ) : (
             <p className="text-muted-foreground text-xs italic">No text explanation returned from AI.</p>
           )}
