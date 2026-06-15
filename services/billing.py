@@ -4,9 +4,12 @@ from constants import BillingStatus
 from models import Billing, Contract, Timesheet
 
 
+FormattedAuditDataset = list[tuple[Timesheet, Billing, Contract]]
+
+
 class BillingService:
     @staticmethod
-    def run_billing_audit(db: Session):
+    def run_billing_audit(db: Session) -> FormattedAuditDataset:
         stmt = (
             select(Timesheet, Billing, Contract)
             .join(
@@ -22,7 +25,7 @@ class BillingService:
         return BillingService._format_audit_dataset(results)
 
     @staticmethod
-    def _format_audit_dataset(results: list[tuple[Timesheet, Billing, Contract]]):
+    def _format_audit_dataset(results: FormattedAuditDataset):
         output_dataset = []
 
         for timesheet, billing, contract in results:
