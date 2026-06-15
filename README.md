@@ -33,6 +33,8 @@ API runs at `http://localhost:8000`.
 
 ### 3. Frontend
 
+Requires pnpm ([install guide](https://pnpm.io/installation)).
+
 ```bash
 cd frontend
 pnpm install
@@ -49,3 +51,11 @@ App runs at `http://localhost:5173`.
 4. Run the audit to see flagged records and Claude's analysis.
 
 Sample CSVs to try this with are in `backend/provided-docs/`.
+
+## Tests
+
+```bash
+cd backend
+source ./.venv/bin/activate
+pytest
+```
