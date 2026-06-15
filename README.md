@@ -52,6 +52,19 @@ App runs at `http://localhost:5173`.
 
 Sample CSVs to try this with are in `backend/provided-docs/`.
 
+## Automation
+
+`backend/automate.py` runs the full pipeline (load timesheet, billing and contract data, then run the audit) without the UI.
+
+```bash
+cd backend
+source ./.venv/bin/activate
+# This is the live backend URL
+API_URL="https://timesheet-auditor-api.politesky-af322db0.eastus.azurecontainerapps.io" python automate.py
+```
+
+Defaults to `http://localhost:8000` if `API_URL` isn't set.
+
 ## Tests
 
 ```bash
