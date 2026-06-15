@@ -10,3 +10,7 @@ class BillingColumnMapping(BaseModel):
     project: str = Field(description="CSV column name for Project")
     hours_billed: str = Field(description="CSV column name for Hours Billed")
     rate_charged: str = Field(description="CSV column name for Rate Charged")
+
+
+class IdentifyDiscrepanciesRequest(BaseModel):
+    client_rules: str | None = None
