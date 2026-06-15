@@ -2,6 +2,7 @@ from routers import billing_router
 from routers import data_processing_router
 from fastapi import Request, status, FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from db import engine
 from sqlmodel import SQLModel
@@ -21,6 +22,15 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(data_processing_router)
 app.include_router(billing_router)
 
