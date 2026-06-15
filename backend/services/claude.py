@@ -10,6 +10,8 @@ Follow always the next steps:
 1. Identify the discrepancies (only the ones marked as ERROR)
 2. Identify the root cause of the discrepancies
 3. Propose a solution to fix the discrepancies
+
+Your response should be short and concise, formatted in Markdown.
 """
 
 
